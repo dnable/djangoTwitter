@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
+
+
+{% if request.user.is_authenticated %}
+
+<div class="home-container">
+    <div>
+        <!-- sidebar nav (links) -->
+        <!-- <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a> -->
+        <a href="">Home</a> <br>
+        <a href="">Search</a><br>
+        <a href="">Notifications</a><br>
+        <a href="">Inbox</a><br>
+        <a href="">Lists</a><br>
+        <a href="">Communities</a><br>
+        <a href="">Verified</a><br>
+        <a href="">Profile</a><br>
+        <a href="">...</a><br>
+
+    </div>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}} 
+        <input type="tweet" name="tweet" placeholder="What is happening?!" />
+
+        <input type="submit" value="Post" />
+    </form>
+    
+    <div>
+        <!-- main feed -->
+    </div>
+
+</div>
+
+{% else %}
+
+{% endif %}
+
+
+{% endblock content%}
