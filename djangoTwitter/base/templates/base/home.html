@@ -6,7 +6,7 @@
 <style>
     .home-container{
         display: grid;
-        grid-template-columns: 1fr 3fr;
+        grid-template-columns: 1fr 2fr 1fr;
     }
 </style>
 
@@ -29,16 +29,21 @@
 
     </div>
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form.as_p}} 
-        <input type="tweet" name="tweet" placeholder="What is happening?!" />
-
-        <input type="submit" value="Post" />
-    </form>
-    
     <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="tweet" name="tweet" placeholder="What is happening?!" />
+
+            <input type="submit" value="Post" />
+        </form>
+    
+
         <!-- main feed -->
+        {% for tweet in tweets %}
+            <p>@{{tweet.user}} - {{tweet.created}}</p>
+            <p>{{tweet.tweet}}</p>
+            <hr>
+        {% endfor %}
     </div>
 
 </div>

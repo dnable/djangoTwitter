@@ -3,16 +3,27 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from .models import Tweet
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'base/home.html')
+    tweets = Tweet.objects.all()
+    context = {'tweets': tweets}
+
+    if request.method == 'POST':
+        tweet = Tweet()
+        tweet.user = request.user
+        tweet.tweet = request.POST.get('tweet')
+        tweet.save()
+        return redirect('home')
+
+    return render(request, 'base/home.html', context)
 
 def loginPage(request):
     page = 'login'
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('home') 
 
     if request.method == "POST":
         username = request.POST.get('username').lower()
