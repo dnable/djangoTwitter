@@ -1,0 +1,89 @@
+.container{
+    display: grid;
+    grid-template-columns: 2fr 4fr 3fr;
+}
+
+.container a:hover{
+    background-color: lightgray;
+}
+
+.container button:hover{
+    background: lightgray;
+}
+
+#sidebar-left ul{
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar-left li{
+    padding-bottom: 15px;
+}
+
+#tweet-filter{
+    margin-top: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 50px;
+    box-sizing: border-box;
+}
+
+#tweet-filter a{
+    text-align: center;
+    text-decoration: none;
+    color: gray;
+}
+
+#main button{
+    background-color: white;
+    border: none;
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+#tweet-box{
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+}
+
+#tweet-box h5{
+    vertical-align: top;
+    border: 1px solid lightgray;
+    margin-top: 0px;
+    border-right: none;
+    border-bottom: none;
+}
+
+#main textarea{
+    width: 100%;
+    height: 70px;
+    border-bottom: none;
+    border-left: none;
+    resize: none;
+    border-color: lightgray;
+    box-sizing: border-box;
+}
+
+#tweet-box input{
+    float: right;
+    color: white;
+    background-color: #1DA1F2;
+    border-radius: 35%;
+    border: none;
+    padding: 2% 3%;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#feed{
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    border: 1px solid lightgray;
+    min-height: 100px;
+}
+
+#feed h5{
+    margin-right: 10px;
+}

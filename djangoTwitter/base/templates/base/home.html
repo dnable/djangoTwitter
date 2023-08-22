@@ -3,48 +3,76 @@
 
 {% block content %}
 
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-    }
-</style>
-
 
 {% if request.user.is_authenticated %}
 
-<div class="home-container">
-    <div>
-        <!-- sidebar nav (links) -->
-        <!-- <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a> -->
-        <a href="">Home</a> <br>
-        <a href="">Search</a><br>
-        <a href="">Notifications</a><br>
-        <a href="">Inbox</a><br>
-        <a href="">Lists</a><br>
-        <a href="">Communities</a><br>
-        <a href="">Verified</a><br>
-        <a href="">Profile</a><br>
-        <a href="">...</a><br>
+<div class="container">
 
+    <!-- sidebar nav (links) -->
+    <div id="sidebar-left">
+        <h3>X</h2>
+        
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Search</a></li>
+            <li><a href="">Notifications</a></li>
+            <li><a href="">Inbox</a></li>
+            <li><a href="">Lists</a></li>
+            <li><a href="">Communities</a></li>
+            <li><a href="">Verified</a></li>
+            <li><a href="">Profile</a></li>
+            <li><a href="">...</a></li>
+        </ul>
     </div>
 
-    <div>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <input type="tweet" name="tweet" placeholder="What is happening?!" />
 
-            <input type="submit" value="Post" />
-        </form>
-    
+    <!-- Middle Content. New Tweet & Main Feed  -->
+    <div id="main">
+        <h3>Home</h3>
 
-        <!-- main feed -->
+        <div id="tweet-filter">
+            <a href="">For you</a>
+            <a href="">Following</a>
+        </div>
+        
+        <div id="tweet-box">
+            <h5>ProfileIcon</h5>
+            
+            <form method="POST" action="">
+                {% csrf_token %}
+                <textarea type="tweet" name="tweet" placeholder="What is happening?!"></textarea>
+
+                <input type="submit" value="Post"/>
+            </form>
+        </div>
+        
+        
         {% for tweet in tweets %}
-            <p>@{{tweet.user}} - {{tweet.created}}</p>
-            <p>{{tweet.tweet}}</p>
-            <hr>
+        <div id="feed">    
+            <div>
+                <h5>ProfileIcon</h5>
+            </div>
+            
+            <div>
+                <p>{{tweet.user.first_name}} {{tweet.user.last_name}} @{{tweet.user}} - {{tweet.created}}</p>
+                <p>{{tweet.tweet}}</p>
+            </div>
+        </div>
         {% endfor %}
+        
     </div>
+
+    <!-- Right side bar. Search & What's Happening -->
+    <div id="sidebar-right">
+        <form method="GET" action="">
+            <input type="text" name="q" placeholder="Search" />
+        </form>
+
+        <div>
+            <h3>What's happening</h3>
+        </div>
+    </div>
+
 
 </div>
 
