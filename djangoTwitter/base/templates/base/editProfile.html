@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+
+{% if request.user.is_authenticated %}
+
+<form id="formEditProfile" method="POST" action="">
+    {% csrf_token %}
+    
+    <div class="formGroup">
+        <label>Username:</label>    
+        <input type="text" name="username" value="@{{user.username}}" disabled="disabled"/>
+    </div>
+    
+    <!-- <div class="formGroup">    
+        <label>Password:</label>
+        <input type="password" name="password" />
+    </div>
+     -->
+
+
+     <div class="formGroup">    
+        <label>First Name</label>
+        <input type="text" name="first_name" value="{{user.first_name}}"/>
+    </div>
+
+    <div class="formGroup">    
+        <label>Last Name:</label>
+        <input type="text" name="last_name" value="{{user.last_name}}"/>
+    </div>
+    <input type="submit" value="Save" /> 
+</form>
+
+{% endif %}
+
+
+{% endblock content%}

@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Tweet
 
-# Create your views here.
 
 def home(request):
     tweets = Tweet.objects.all()
@@ -48,6 +47,42 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+
+def profile(request):
+    if request.user.is_authenticated: 
+        tweets = Tweet.objects.filter(user = request.user)
+        
+        fullName = User.get_full_name(request.user)
+        context = {'user': request.user, 'fullName': fullName, 'tweets': tweets}
+
+        return render(request, 'base/profile.html', context)
+    
+    redirect('home')
+
+def editProfile(request):    
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            user = request.user
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+            # user.save(update_fields=['first_name', 'last_name'])
+            user.save()            
+        
+        context = {'user': request.user}
+        return render(request, 'base/editProfile.html', context)
+    
+    redirect('home')
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    tweets = Tweet.objects.filter(user = user)
+    fullName = User.get_full_name(user)
+
+    context = {'user': user, 'fullName': fullName, 'tweets': tweets}
+
+    return render(request, 'base/profile.html', context)
+    
+    redirect('home')
 
 def registerPage(request):
     form = UserCreationForm()

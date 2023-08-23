@@ -1,0 +1,28 @@
+{% if request.user.is_authenticated %}
+<!-- sidebar nav (links) -->
+<div id="sidebar-left">
+    <h3>X</h2>
+    
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="/">Search</a></li>
+        <!-- <li><a href="">Notifications</a></li> -->
+        <!-- <li><a href="">Inbox</a></li> -->
+        <!-- <li><a href="">Lists</a></li> -->
+        <!-- <li><a href="">Communities</a></li> -->
+        <!-- <li><a href="">Verified</a></li> -->
+        <li><a href="{% url 'profile' %}">Profile</a></li>
+        <li><a href="/">...</a></li>
+    </ul>
+
+    <a id="logout" href="{% url 'logout' %}">Logout</a>
+</div>
+
+{% else %}
+
+<a href="{% url 'login' %}">Login</a>
+
+{% endif %}
+
+
+

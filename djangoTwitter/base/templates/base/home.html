@@ -6,25 +6,7 @@
 
 {% if request.user.is_authenticated %}
 
-<div class="container">
-
-    <!-- sidebar nav (links) -->
-    <div id="sidebar-left">
-        <h3>X</h2>
-        
-        <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Search</a></li>
-            <li><a href="">Notifications</a></li>
-            <li><a href="">Inbox</a></li>
-            <li><a href="">Lists</a></li>
-            <li><a href="">Communities</a></li>
-            <li><a href="">Verified</a></li>
-            <li><a href="">Profile</a></li>
-            <li><a href="">...</a></li>
-        </ul>
-    </div>
-
+<div>
 
     <!-- Middle Content. New Tweet & Main Feed  -->
     <div id="main">
@@ -35,15 +17,19 @@
             <a href="">Following</a>
         </div>
         
-        <div id="tweet-box">
-            <h5>ProfileIcon</h5>
-            
-            <form method="POST" action="">
-                {% csrf_token %}
-                <textarea type="tweet" name="tweet" placeholder="What is happening?!"></textarea>
-
-                <input type="submit" value="Post"/>
-            </form>
+        <div id="tweet-box-outer">
+            <div id="tweet-box">
+                <a href="{% url 'profile' %}">
+                    <img src="https://randomuser.me/api/portraits/thumb/men/75.jpg">
+                </a>
+                
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <textarea id="tweet" type="tweet" name="tweet" placeholder="What is happening?!" oninput="disablePost()"></textarea>
+                    
+                    <input id="postInput" type="submit" value="Post" disabled="disabled"/>
+                </form>
+            </div>
         </div>
         
         
@@ -54,7 +40,7 @@
             </div>
             
             <div>
-                <p>{{tweet.user.first_name}} {{tweet.user.last_name}} @{{tweet.user}} - {{tweet.created}}</p>
+                <p>{{tweet.user.first_name}} {{tweet.user.last_name}} <a href="{% url 'user-profile' tweet.user.id %}">@{{tweet.user}}</a> - {{tweet.created}}</p>
                 <p>{{tweet.tweet}}</p>
             </div>
         </div>
@@ -62,21 +48,20 @@
         
     </div>
 
-    <!-- Right side bar. Search & What's Happening -->
-    <div id="sidebar-right">
-        <form method="GET" action="">
-            <input type="text" name="q" placeholder="Search" />
-        </form>
-
-        <div>
-            <h3>What's happening</h3>
-        </div>
-    </div>
-
-
 </div>
 
 {% else %}
+
+<div class="container">
+    <div id="loginLogo">
+        <img src="/static/images/logo.png">
+    </div>
+
+    <div>    
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+    
+</div>
 
 {% endif %}
 

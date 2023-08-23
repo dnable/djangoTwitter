@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+
+{% if request.user.is_authenticated %}
+
+<div>
+    <img src="" style="width: 100%; height: 30%;">
+    <a href="{% url 'profile' %}">
+        <img src="https://randomuser.me/api/portraits/thumb/men/75.jpg">
+    </a>
+
+    {% if request.user.id == user.id %}
+    <a href="{% url 'editProfile' %}">Edit Profile</a>
+    {% else %}
+    <a role="button">Follow</a>
+    {% endif %}
+    
+    <div id="profileDetails">
+        <h3>{{fullName}}</h3>
+        <h4>@{{user.username}}</h4>
+        <h4>Joined {{user.date_joined}}</h4>
+
+        <!-- Followers / Following count -->
+
+    </div>
+
+    <!-- feed -->
+    {% for tweet in tweets %}
+    <div id="Profilefeed">            
+        <div>
+            <p>{{tweet.user.first_name}} {{tweet.user.last_name}} @{{tweet.user}} - {{tweet.created}}</p>
+            <p>{{tweet.tweet}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div>    
+    <a href="{% url 'login' %}">Login</a>
+</div>
+
+{% endif %}
+
+{% endblock content %}

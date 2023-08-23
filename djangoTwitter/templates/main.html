@@ -5,11 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Twitter</title>
+    <title>djangoTwitter</title>
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+
+    <script>
+      function disablePost(){
+        var tweet = document.getElementById('tweet').value
+        if(tweet != ""){
+          document.getElementById('postInput').disabled = '';
+        }
+        else{
+          document.getElementById('postInput').disabled = 'disabled';
+        }
+      }
+    </script>
   </head>
-  <body>
-    <!-- {% include 'navbar.html'%} -->
+  <body class="container">
+    {% include 'navbarLeft.html' %}
 
     {% if messages %}
     <ul class="messages">
@@ -22,5 +34,8 @@
     {% block content %}
     <!-- template inheritance -->
     {% endblock %}
+
+
+    {% include 'navbarRight.html' %}
   </body>
 </html>
