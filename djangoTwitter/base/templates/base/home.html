@@ -40,7 +40,7 @@
             </div>
             
             <div>
-                <p>{{tweet.user.first_name}} {{tweet.user.last_name}} <a href="{% url 'user-profile' tweet.user.id %}">@{{tweet.user}}</a> - {{tweet.created}}</p>
+                <p>{{tweet.user.first_name}} {{tweet.user.last_name}} <a href="{% url 'userProfile' tweet.user.id %}">@{{tweet.user}}</a> - {{tweet.created}}</p>
                 <p>{{tweet.tweet}}</p>
             </div>
         </div>

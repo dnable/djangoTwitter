@@ -15,7 +15,7 @@
     {% if request.user.id == user.id %}
     <a href="{% url 'editProfile' %}">Edit Profile</a>
     {% else %}
-    <a role="button">Follow</a>
+    <a href="{% url 'follow' user.id %}" role="button">Follow</a>
     {% endif %}
     
     <div id="profileDetails">

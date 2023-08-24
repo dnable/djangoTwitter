@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Tweet
+from .models import Tweet, Follower
 
 
 def home(request):
@@ -65,7 +65,6 @@ def editProfile(request):
             user = request.user
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
-            # user.save(update_fields=['first_name', 'last_name'])
             user.save()            
         
         context = {'user': request.user}
@@ -77,7 +76,7 @@ def userProfile(request, pk):
     user = User.objects.get(id=pk)
     tweets = Tweet.objects.filter(user = user)
     fullName = User.get_full_name(user)
-
+    
     context = {'user': user, 'fullName': fullName, 'tweets': tweets}
 
     return render(request, 'base/profile.html', context)
@@ -99,3 +98,11 @@ def registerPage(request):
             messages.error(request, 'An error occurred during registration.')
 
     return render(request, 'base/login_register.html', {'form': form})
+
+def follow(request, pk):
+    follower = Follower()
+    follower.user = User.objects.get(id=pk)
+    follower.follower = request.user
+    follower.save()
+    
+    return redirect('userProfile', pk=pk)

@@ -9,7 +9,9 @@ urlpatterns = [
 
     path('register/', views.registerPage, name="register"),
     path('profile/', views.profile, name="profile"),
-    path('editProfile', views.editProfile, name="editProfile"),
+    path('editProfile/', views.editProfile, name="editProfile"),
 
-    path('profile/<str:pk>/', views.userProfile, name="user-profile"),
+    path('profile/<str:pk>/', views.userProfile, name="userProfile"),
+
+    path('follow/<str:pk>/', views.follow, name="follow"),
 ]
