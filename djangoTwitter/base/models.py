@@ -14,9 +14,11 @@ class Tweet(models.Model):
         ordering = ['-created']
 
 class Follower(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="user_id")
-    follower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="follower_id")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="followed")
+    follower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="follower")
     when = models.DateTimeField(auto_now=True)
 
+    list_display = ("user","follower","when",)
+
     def __str__(self):
-        return self.follower.username
+        return self.user.username

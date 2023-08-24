@@ -7,9 +7,16 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Tweet, Follower
 
 
-def home(request):
-    tweets = Tweet.objects.all()
-    context = {'tweets': tweets}
+def home(request, pk=''):
+    tweets = None
+    
+    if pk == 'following':
+        usersFollowed = Follower.objects.filter(follower = request.user)
+        tweets = Tweet.objects.filter(user__followed__in=usersFollowed)
+    else:
+        tweets = Tweet.objects.all()
+
+    context = {'tweets': tweets, 'filter': pk}
 
     if request.method == 'POST':
         tweet = Tweet()
@@ -130,3 +137,4 @@ def deleteTweet(request, pk, path):
         return render(request, 'base/deleteTweet.html', context)
     
     return redirect('home')
+

@@ -13,8 +13,8 @@
         <h3>Home</h3>
 
         <div id="tweet-filter">
-            <a href="">For you</a>
-            <a href="">Following</a>
+            <a href="{% url 'homeFilter' 'forYou' %}">For you</a>
+            <a href="{% url 'homeFilter' 'following' %}">Following</a>
         </div>
         
         <div id="tweet-box-outer">

@@ -1,7 +1,15 @@
 from django.contrib import admin
-
-# Register your models here.
 from .models import Tweet, Follower
 
-admin.site.register(Tweet)
-admin.site.register(Follower)
+
+class TweetAdmin(admin.ModelAdmin):
+    list_display = ("user", "tweet", "created",)
+
+
+class FollowerAdmin(admin.ModelAdmin):
+    list_display = ("user","follower","when",)
+
+
+
+admin.site.register(Tweet, TweetAdmin)
+admin.site.register(Follower, FollowerAdmin)
