@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -53,7 +54,12 @@ def profile(request):
         tweets = Tweet.objects.filter(user = request.user)
         
         fullName = User.get_full_name(request.user)
-        context = {'user': request.user, 'fullName': fullName, 'tweets': tweets}
+
+        followersCount = Follower.objects.filter(user = request.user).count
+        followingCount = Follower.objects.filter(follower = request.user).count
+
+        context = {'user': request.user, 'fullName': fullName, 'tweets': tweets, 
+                   'followersCount': followersCount, 'followingCount': followingCount}
 
         return render(request, 'base/profile.html', context)
     
@@ -76,12 +82,15 @@ def userProfile(request, pk):
     user = User.objects.get(id=pk)
     tweets = Tweet.objects.filter(user = user)
     fullName = User.get_full_name(user)
+
+    followersCount = Follower.objects.filter(user = user).count
+    followingCount = Follower.objects.filter(follower = user).count
     
-    context = {'user': user, 'fullName': fullName, 'tweets': tweets}
+    context = {'user': user, 'fullName': fullName, 'tweets': tweets,
+               'followersCount': followersCount, 'followingCount': followingCount}
 
     return render(request, 'base/profile.html', context)
     
-    redirect('home')
 
 def registerPage(request):
     form = UserCreationForm()
@@ -106,3 +115,18 @@ def follow(request, pk):
     follower.save()
     
     return redirect('userProfile', pk=pk)
+
+def deleteTweet(request, pk, path):
+    tweet = Tweet.objects.get(id=pk)
+
+    if request.user == tweet.user:
+        
+        if request.method == 'POST':
+            tweet.delete()
+            next = request.POST.get('next', '/')
+            return redirect(next)  
+        
+        context = {'tweet': tweet, 'path': path}
+        return render(request, 'base/deleteTweet.html', context)
+    
+    return redirect('home')

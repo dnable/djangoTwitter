@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+
+{% if request.user.is_authenticated %}
+
+<form id="deleteTweet" method="POST" action="">
+    {% csrf_token %}
+    
+    <h3>Are you sure you want to delete this tweet?</h3>
+    <div id="Profilefeed">            
+        <div>
+            <p>{{tweet.user.first_name}} {{tweet.user.last_name}} @{{tweet.user}} - {{tweet.created}}</p>
+            <p>{{tweet.tweet}}</p>
+        </div>
+    </div>
+    <input type="hidden" name="next" value="{{ path }}">
+    <input type="submit" value="Confirm" /> 
+</form>
+
+{% endif %}
+
+
+{% endblock content%}

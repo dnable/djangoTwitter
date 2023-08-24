@@ -24,7 +24,8 @@
         <h4>Joined {{user.date_joined}}</h4>
 
         <!-- Followers / Following count -->
-
+        <p>{{followingCount}} Following</p>
+        <p>{{followersCount}} Followers</p>
     </div>
 
     <!-- feed -->
@@ -34,6 +35,12 @@
             <p>{{tweet.user.first_name}} {{tweet.user.last_name}} @{{tweet.user}} - {{tweet.created}}</p>
             <p>{{tweet.tweet}}</p>
         </div>
+
+        {% if request.user.id == tweet.user.id %}
+        <div id="deleteTweet">
+            <a href="{% url 'deleteTweet' tweet.id 'profile' %}">Delete</a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

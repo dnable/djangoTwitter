@@ -43,6 +43,12 @@
                 <p>{{tweet.user.first_name}} {{tweet.user.last_name}} <a href="{% url 'userProfile' tweet.user.id %}">@{{tweet.user}}</a> - {{tweet.created}}</p>
                 <p>{{tweet.tweet}}</p>
             </div>
+            
+            {% if request.user.id == tweet.user.id %}
+            <div id="deleteTweet">
+                <a href="{% url 'deleteTweet' tweet.id 'home' %}">Delete</a>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
         
