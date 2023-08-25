@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<div>
+    <!-- TODO:Back button here -->
+
+    <h1>{{fullName}}</h1>
+    <h3>@{{user.username}}</h3>
+
+    <div id="follower-filter">
+        <a href="{% url 'followers' user.id %}">Followers</a>
+        <a href="{% url 'following' user.id %}">Following</a>
+    </div>
+
+    {% if usersToDisplay.count == 0 %}
+    <div>
+        <h1>Looking for followers?</h1>
+        <p>When someone follows this account, they'll show up here. Tweeting and interacting with others helps boost followers.</p>
+    </div>
+    {% endif %}
+
+    {% for follower in usersToDisplay %}
+    <div id="feed">    
+        <div>
+            <h5>ProfileIcon</h5>
+        </div>
+        
+        <div>
+            <p>{{follower.follower.first_name}} {{follower.follower.last_name}}</p>
+            <a href="{% url 'userProfile' follower.follower.id %}">@{{follower.follower.username}}</a>
+            <!-- TODO: user description here -->
+        </div>
+        
+        <!-- TODO: add Follow button on users we are not already following -->
+        <!-- {% if request.user.id != user.id %}
+        <a href="{% url 'follow' user.id %}" role="button">Follow</a>
+        {% endif %} -->
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

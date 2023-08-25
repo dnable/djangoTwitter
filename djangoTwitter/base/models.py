@@ -18,7 +18,5 @@ class Follower(models.Model):
     follower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="follower")
     when = models.DateTimeField(auto_now=True)
 
-    list_display = ("user","follower","when",)
-
     def __str__(self):
         return self.user.username

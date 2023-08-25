@@ -15,7 +15,11 @@
     {% if request.user.id == user.id %}
     <a href="{% url 'editProfile' %}">Edit Profile</a>
     {% else %}
-    <a href="{% url 'follow' user.id %}" role="button">Follow</a>
+        {% if followActive %}
+        <a href="{% url 'unfollow' user.id %}" role="button">Following</a>
+        {% else %}
+        <a href="{% url 'follow' user.id %}" role="button">Follow</a>
+        {% endif %}
     {% endif %}
     
     <div id="profileDetails">
@@ -24,8 +28,8 @@
         <h4>Joined {{user.date_joined}}</h4>
 
         <!-- Followers / Following count -->
-        <p>{{followingCount}} Following</p>
-        <p>{{followersCount}} Followers</p>
+        <a href="{% url 'following' user.id %}">{{followingCount}} Following</a>
+        <a href="{% url 'followers' user.id %}">{{followersCount}} Followers</a>
     </div>
 
     <!-- feed -->

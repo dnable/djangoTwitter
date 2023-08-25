@@ -90,11 +90,13 @@ def userProfile(request, pk):
     tweets = Tweet.objects.filter(user = user)
     fullName = User.get_full_name(user)
 
-    followersCount = Follower.objects.filter(user = user).count
-    followingCount = Follower.objects.filter(follower = user).count
+    followers = Follower.objects.filter(user = user)
+    following = Follower.objects.filter(follower = user)
     
-    context = {'user': user, 'fullName': fullName, 'tweets': tweets,
-               'followersCount': followersCount, 'followingCount': followingCount}
+    followActive = followers.filter(follower = request.user)
+    
+    context = {'user': user, 'fullName': fullName, 'tweets': tweets, 'followActive': followActive,
+               'followersCount': followers.count, 'followingCount': following.count}
 
     return render(request, 'base/profile.html', context)
     
@@ -123,6 +125,12 @@ def follow(request, pk):
     
     return redirect('userProfile', pk=pk)
 
+def unfollow(request, pk):
+    follower = Follower.objects.get(user = User(id=pk), follower = request.user)
+    follower.delete()
+    
+    return redirect('userProfile', pk=pk)
+
 def deleteTweet(request, pk, path):
     tweet = Tweet.objects.get(id=pk)
 
@@ -138,3 +146,22 @@ def deleteTweet(request, pk, path):
     
     return redirect('home')
 
+
+def followers(request, pk):
+    user = User.objects.get(id = pk)
+    fullName = user.get_full_name()
+    followers = Follower.objects.filter(user = user)
+
+    context = {'user': user, 'fullName': fullName, 'usersToDisplay': followers}
+
+    return render(request, 'base/followers.html', context)
+
+
+def following(request, pk):
+    user = User.objects.get(id = pk)
+    fullName = user.get_full_name()
+    following = Follower.objects.filter(follower = user)
+
+    context = {'user': user, 'fullName': fullName, 'usersToDisplay': following}
+
+    return render(request, 'base/following.html', context)

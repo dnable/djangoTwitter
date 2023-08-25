@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<div>
+    <!-- TODO:Back button here -->
+
+    <h1>{{fullName}}</h1>
+    <h3>@{{user.username}}</h3>
+
+    <div id="follower-filter">
+        <a href="{% url 'followers' user.id %}">Followers</a>
+        <a href="{% url 'following' user.id %}">Following</a>
+    </div>
+
+    {% for following in usersToDisplay %}
+    <div id="feed">    
+        <div>
+            <h5>ProfileIcon</h5>
+        </div>
+        
+        <div>
+            <p>{{following.user.first_name}} {{following.user.last_name}}</p>
+            <a href="{% url 'userProfile' following.user.id %}">@{{following.user.username}}</a>
+            <!-- TODO: user description here -->
+        </div>
+        
+        <!-- TODO: add Follow button on users we are not already following -->
+        <!-- {% if request.user.id != user.id %}
+        <a href="{% url 'follow' user.id %}" role="button">Follow</a>
+        {% endif %} -->
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

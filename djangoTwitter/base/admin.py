@@ -11,5 +11,5 @@ class FollowerAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(Tweet, TweetAdmin)
+admin.site.register(Tweet, TweetAdmin)      
 admin.site.register(Follower, FollowerAdmin)
